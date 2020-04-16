@@ -37,6 +37,7 @@ GTimer_ms debounceTimer(DEBOUNCE);
 const int8_t VT_pin[] = {12, 8, 7, 6, 2, 4};                // выводы для транзисторных ключей
 const byte def_pin[] = {A0, A2, A1, A3};                    //выводы для дешифратора defPin[out1,out2,out4,out8];
 const int8_t mass_led[] = {9, 10, 11};                      //массив с пинами светодиодов
+int8_t led_color[] = {0, 0, 0};                             //массив с цветами светодиодов
 const int8_t digitMask[] = {9, 8, 0, 5, 6, 3, 2, 7, 4, 1};  //подключение индикатора
 boolean anodeStates[] = {1, 1, 1, 1, 1, 1};
 
@@ -67,7 +68,7 @@ boolean lampState = false;                                      //for blimming l
 unsigned long last_step = 0;
 short ihue = 0;
 int8_t c = 0;
-bool fl_color = true;                                           // on/off подсветки
+byte fl_color = 0;                                           // on/off подсветки
 
 //only for buttons func
 byte currentDigit = 0;

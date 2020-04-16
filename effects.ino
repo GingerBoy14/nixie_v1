@@ -140,9 +140,11 @@ void flipTick() {
 
 
 void burnIndicators() {
+
     for (byte d = 0; d < 10;){
         if (burnTimer.isReady())d++;
       for (byte i = 0; i < 6; i++) {
+        anodeStates[i] = 1;
         time_date[i] = d;
     }
   }

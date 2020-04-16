@@ -108,7 +108,11 @@ void Funcrions(){
   }
 
   if (mass_but[2]){
-    fl_color=!fl_color;
+     if(fl_color == 2) {
+      fl_color = 0;
+    }else{
+      fl_color++;
+    }
     set_color(fl_color);
   }
   if (mass_but[3]) {

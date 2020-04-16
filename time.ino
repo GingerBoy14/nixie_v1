@@ -61,7 +61,7 @@ void calculateTime() {
             mins++;
 
         if ((hrs == 12 && mins == 1 && secs == 0)       // чистим чистим!
-        || (hrs == 0 && mins == 1 && secs == 0)) {
+        || (hrs == 22 && mins == 35 && secs == 0)) {
             byte repeat = 0;                             // for burnIndi
             while (repeat < 5) {
                 burnIndicators();
