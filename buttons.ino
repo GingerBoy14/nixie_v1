@@ -1,10 +1,12 @@
+
+
 void button() {
   settingBlink();
   if ( (mass_but[0] || mass_but[1] || mass_but[2] || mass_but[3])
   && debounceTimer.isReady()) {
-    if (curMode == 0) {               //time and some function
-      Functions();
-    }else if(curMode == 1){           //settings
+    if (curMode == 0) { //time and some function
+      Funcrions();
+    }else if(curMode == 1){ //settings
       settingsFunctions();
     }
   }  else if (!(mass_but[1] && mass_but[2])
@@ -16,7 +18,7 @@ void button() {
 void settingBlink(){
   if(curMode == 1 && blinkTimer.isReady() && !dontblink){
     lampState = !lampState;
-    switch (currentDigit) {             //мигаем выбранным разрядом
+    switch (currentDigit) {                               //мигаем выбранным разрядом
       case 0:{
         anodeStates[4] = 0;
         anodeStates[5] = 0;
@@ -40,21 +42,26 @@ void settingBlink(){
   }
 }
 
+bool smth_do = false;
 void settingsFunctions(){
+
   if (mass_but[0]) {
     if(currentDigit == 2) {
       currentDigit = 0;
     }else{
       currentDigit++;
     }
-  }else if (mass_but[3]) {
+  }else
+  if (mass_but[3]) {
       curMode = 0;
       currentDigit = 0;
-  }else if (mass_but[1]) {
+  }else
+  if (mass_but[1]) {
     confPlus();
     dontblink = true;
     smth_do = true;
-  }else if (mass_but[2]) {
+  }else
+  if (mass_but[2]) {
     confMinus();
     dontblink = true;
     smth_do = true;
@@ -64,7 +71,7 @@ void settingsFunctions(){
   }
 }
 
-void Functions(){
+void Funcrions(){
   if (mass_but[0]) {
     flipTick();
     changeDate = !changeDate;
@@ -101,7 +108,7 @@ void Functions(){
   }
 
   if (mass_but[2]){
-     if(fl_color == 3) {
+     if(fl_color == 2) {
       fl_color = 0;
     }else{
       fl_color++;

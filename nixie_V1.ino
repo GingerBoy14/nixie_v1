@@ -2,7 +2,7 @@
 void setup() {
  //Serial.begin(9600);
   s_timer();
-  analogWrite(3, 90);                                           // если запитывать от блока питания 9в
+  analogWrite(3, 80);                                           // если запитывать от блока питания 9в
   s_pins();
   s_RTC();
   sendTime(hrs, mins, secs);

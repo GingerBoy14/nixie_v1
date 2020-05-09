@@ -42,32 +42,35 @@ void acceptNewTime(short d_h, short m_m, short y_s){
         days = d_h;
         sendDate(days, months, years);
 
-    } else {                  // will be change the time
+    } else {        // will be change the time
         secs = y_s;
         mins = m_m;
         hrs = d_h;
         sendTime(hrs, mins, secs);
     }
-    if(curMode == 0) 
-      rtc.adjust(DateTime(years,months,days,hrs,mins,secs));             //только после выхода из настроек
+    if(curMode == 0) rtc.adjust(DateTime(years,months,days,hrs,mins,secs));             //только после выхода из настроек
 }
 
 void calculateTime() {
     dotFlag = !dotFlag;
     if (dotFlag) {
-        if(!changeDate)    newTimeFlag = true;            // флаг что нужно поменять время, если не просматриваем дату
+        if(!changeDate)    newTimeFlag = true;    // флаг что нужно поменять время, если не просматриваем дату
         secs++;
         if (secs > 59) {
             secs = 0;
             mins++;
 
-        if ((hrs == 12 && mins == 1 && secs == 0)         // чистим чистим!
-        ||  (hrs == 00 && mins == 1 && secs == 0)) {
+        if ((hrs == 12 && mins == 1 && secs == 0)       // чистим чистим!
+        || (hrs == 22 && mins == 35 && secs == 0)) {
+            byte repeat = 0;                             // for burnIndi
+            while (repeat < 5) {
                 burnIndicators();
+                repeat++;
+            }
         }
 
         if ((mins == 1 && secs == 15) || mins == 30) {    // каждые полчаса
-            DateTime now = rtc.now();                     // синхронизация с RTC
+            DateTime now = rtc.now();       // синхронизация с RTC
             secs = now.second();
             mins = now.minute();
             hrs = now.hour();
