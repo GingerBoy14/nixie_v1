@@ -1,13 +1,12 @@
-
-
 void button() {
   settingBlink();
   if ( (mass_but[0] || mass_but[1] || mass_but[2] || mass_but[3])
   && debounceTimer.isReady()) {
-    if (curMode == 0) { //time and some function
-      Funcrions();
-    }else if(curMode == 1){ //settings
+    if (curMode == 0) {               //time and some function
+      Functions();
+    }else if(curMode == 1){           //settings
       settingsFunctions();
+      changeBright();
     }
   }  else if (!(mass_but[1] && mass_but[2])
   && dontblink && returnBlinkTimer.isReady()) {
@@ -18,7 +17,7 @@ void button() {
 void settingBlink(){
   if(curMode == 1 && blinkTimer.isReady() && !dontblink){
     lampState = !lampState;
-    switch (currentDigit) {                               //мигаем выбранным разрядом
+    switch (currentDigit) {             //мигаем выбранным разрядом
       case 0:{
         anodeStates[4] = 0;
         anodeStates[5] = 0;
@@ -35,33 +34,31 @@ void settingBlink(){
         break;
       }
     }
-  }else if (lampState || curMode == 0 || dontblink) {
+  }else if (lampState || dontblink) {
     for (byte i = 0; i < 6; i++) {
       anodeStates[i] = 1;
     }
   }
 }
 
-bool smth_do = false;
 void settingsFunctions(){
-
   if (mass_but[0]) {
     if(currentDigit == 2) {
       currentDigit = 0;
     }else{
       currentDigit++;
     }
-  }else
-  if (mass_but[3]) {
+  }else if (mass_but[3]) {
+    for (byte i = 0; i < 6; i++) {
+      anodeStates[i] = 1;
+    }
       curMode = 0;
       currentDigit = 0;
-  }else
-  if (mass_but[1]) {
+  }else if (mass_but[1]) {
     confPlus();
     dontblink = true;
     smth_do = true;
-  }else
-  if (mass_but[2]) {
+  }else if (mass_but[2]) {
     confMinus();
     dontblink = true;
     smth_do = true;
@@ -69,9 +66,10 @@ void settingsFunctions(){
   if (smth_do){
        acceptNewTime(changedTime[0], changedTime[1], changedTime[2]);
   }
+
 }
 
-void Funcrions(){
+void Functions(){
   if (mass_but[0]) {
     flipTick();
     changeDate = !changeDate;
@@ -108,7 +106,7 @@ void Funcrions(){
   }
 
   if (mass_but[2]){
-     if(fl_color == 2) {
+     if(fl_color == 3) {
       fl_color = 0;
     }else{
       fl_color++;
@@ -150,7 +148,7 @@ void confPlus(){
         break;
       }
       case 2:{
-        byte daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+        byte daysInMonth[] = { 31,changedTime[2]%2==0 ? 29 : 28,31,30,31,30,31,31,30,31,30,31 };
         changedTime[0]++;
         if(changedTime[0] > daysInMonth[changedTime[1]-1]){
           changedTime[0] = 1;
@@ -210,7 +208,7 @@ void confMinus(){
         break;
       }
       case 2:{
-        byte daysInMonth[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+        byte daysInMonth[] = { 31,changedTime[2]%2==0 ? 29 : 28,31,30,31,30,31,31,30,31,30,31 };
         changedTime[0]--;
         if(changedTime[0] == 0){  changedTime[1]--;
           changedTime[0] = daysInMonth[changedTime[1]-1];
