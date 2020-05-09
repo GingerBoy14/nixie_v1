@@ -6,9 +6,15 @@ void set_color(byte flag) {
       break;
     }
     case 1:{
-          analogWrite(mass_led[0], led_color[0]);
-          analogWrite(mass_led[1], led_color[1]);
-          analogWrite(mass_led[2], led_color[2]);
+      analogWrite( mass_led[c + 1], led_color[1]);
+      analogWrite( mass_led[c], led_color[0]);
+      analogWrite( mass_led[0], led_color[2]);
+          break;
+    }
+    case 2:{
+          analogWrite(mass_led[0], 255);
+          analogWrite(mass_led[1], 255);
+          analogWrite(mass_led[2], 255);
           break;
     }
     default:{
@@ -19,18 +25,21 @@ void set_color(byte flag) {
     }
   }
 }
+
 // плавная смена цветов всей ленты
 void rainbow_fade(uint8_t pause) {
   if (millis() - last_step > pause) {
     ihue++;
-    if (ihue > 255)ihue = 0;
+    
+    if (ihue > 255) ihue = 0;
     if (c > 2) c = 0;
-      led_color[0] = short((255 - ihue)*bright_lvl);
     if (c <= 1) {
+      led_color[0] = short((255 - ihue)*bright_lvl);
       led_color[1] = short(ihue * bright_lvl);
       analogWrite( mass_led[c], led_color[0]);
       analogWrite( mass_led[c + 1], led_color[1]);
     } else {
+      led_color[0] = short((255 - ihue)*bright_lvl);
       led_color[2] = short(ihue * bright_lvl);
       analogWrite( mass_led[c], led_color[0]);
       analogWrite( mass_led[0], led_color[2]);
