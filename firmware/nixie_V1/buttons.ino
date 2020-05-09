@@ -1,13 +1,12 @@
 void button() {
-
   settingBlink();
-
   if ( (mass_but[0] || mass_but[1] || mass_but[2] || mass_but[3])
   && debounceTimer.isReady()) {
     if (curMode == 0) {               //time and some function
       Functions();
     }else if(curMode == 1){           //settings
       settingsFunctions();
+      changeBright();
     }
   }  else if (!(mass_but[1] && mass_but[2])
   && dontblink && returnBlinkTimer.isReady()) {
@@ -67,7 +66,7 @@ void settingsFunctions(){
   if (smth_do){
        acceptNewTime(changedTime[0], changedTime[1], changedTime[2]);
   }
-  changeBright();
+
 }
 
 void Functions(){
