@@ -34,10 +34,10 @@ void set_color(byte flag) {
 void rainbow_fade(uint8_t pause) {
   if (millis() - last_step > pause) {
     ihue++;
-    led_color[0] = short((255 - ihue)*bright_lvl);
-    led_color[1] = short(ihue * bright_lvl);
     if (ihue > 255) ihue = 0;
     if (c > 2) c = 0;
+    led_color[0] = short((255 - ihue)*bright_lvl);
+    led_color[1] = short(ihue * bright_lvl);
     if (c <= 1) {
       analogWrite( mass_led[c], led_color[0]);
       analogWrite( mass_led[c + 1], led_color[1]);
